@@ -134,6 +134,25 @@ app.post('/buyingProducts', async (req, res) => {
     }
 })
 
+app.get('/buyingProducts', async (req, res) => {
+    try {
+        const email = req.query.email;
+        const query = {
+            email: email,
+        }
+        console.log(query);
+        const bookings = await buyingProducts.find(query).toArray();
+        res.send(bookings);
+    }
+    catch (err) {
+        console.log(err.name.bgRed, err.message.bold);
+        res.send({
+            success: false,
+            error: err.message,
+        });
+    }
+})
+
 // users
 app.post('/users', async (req, res) => {
     const user = req.body;

@@ -28,7 +28,8 @@ dbConnection();
 // Collections
 const products = client.db('guitare').collection('products');
 const categories = client.db('guitare').collection('categories');
-
+const buyingProducts = client.db('guitare').collection('buyingProducts');
+const users = client.db('guitare').collection('users');
 
 // products
 app.post('/products', async (req, res) => {
@@ -55,6 +56,7 @@ app.get('/products', async (req, res) => {
     try {
         const cursor = await products.find({}).toArray();
         res.send(cursor);
+        console.log(cursor);
     }
     catch (error) {
         console.log(error.name.bgRed, error.message.bold);
@@ -115,6 +117,30 @@ app.get('/categories', async (req, res) => {
         });
     }
 })
+
+// buying
+app.post('/buyingProducts', async (req, res) => {
+    try {
+        const buying = req.body;
+        const result = await buyingProducts.insertOne(buying)
+        res.send(result)
+    }
+    catch (err) {
+        console.log(err.name.bgRed, err.message.bold);
+        res.send({
+            success: false,
+            error: err.message,
+        });
+    }
+})
+
+// users
+app.post('/users', async (req, res) => {
+    const user = req.body;
+    const result = await users.insertOne(user);
+    res.send(result);
+})
+
 
 app.get('/', (req, res) => {
     res.send('server started');

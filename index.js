@@ -49,6 +49,7 @@ const products = client.db('guitare').collection('products');
 const categories = client.db('guitare').collection('categories');
 const buyingProducts = client.db('guitare').collection('buyingProducts');
 const users = client.db('guitare').collection('users');
+// const addedProducts = client.db('guitare').collection('addedProducts');
 
 // products
 app.post('/products', async (req, res) => {
@@ -238,6 +239,7 @@ app.get('/jwt', async (req, res) => {
 
     res.status(403).send({ accessToken: 'forbidden access' })
 })
+
 
 app.get('/', (req, res) => {
     res.send('server started');

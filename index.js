@@ -38,7 +38,7 @@ async function dbConnection() {
         console.log('Connected to MongoDB'.yellow.bold);
     }
     catch (err) {
-        console.log(err.name, bgRed, err.message, bold);
+        console.log(err.name.bgRed, err.message.bold);
     }
 }
 

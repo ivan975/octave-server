@@ -103,6 +103,13 @@ app.get('/products/:id', async (req, res) => {
     }
 })
 
+app.delete('/products/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await products.deleteOne(query);
+    res.send(result);
+})
+
 // categories
 app.post('/categories', async (req, res) => {
     try {

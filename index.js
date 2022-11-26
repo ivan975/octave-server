@@ -174,9 +174,39 @@ app.get('/buyingProducts', verifyJWT, async (req, res) => {
 
 // users
 app.post('/users', async (req, res) => {
-    const user = req.body;
-    const result = await users.insertOne(user);
-    res.send(result);
+    try {
+        const user = req.body;
+        const result = await users.insertOne(user);
+        res.send(result);
+    }
+    catch (err) {
+        console.log(err.name.bgRed, err.message.bold);
+        res.send({
+            success: false,
+            error: err.message,
+        });
+    }
+})
+
+app.get('/users', async (req, res) => {
+    try {
+        const allUsers = await users.find({}).toArray();
+        res.send(allUsers)
+    }
+    catch (err) {
+        console.log(err.name.bgRed, err.message.bold);
+        res.send({
+            success: false,
+            error: err.message,
+        });
+    }
+})
+
+app.get('/users/admin/:email', async (req, res) => {
+    const email = req.params.email
+    const query = { email };
+    const user = await users.findOne(query);
+    res.send({ isAdmin: user?.role === 'admin' });
 })
 
 // jwt

@@ -189,9 +189,23 @@ app.post('/users', async (req, res) => {
     }
 })
 
-app.get('/users', async (req, res) => {
+app.get('/buyers', async (req, res) => {
     try {
-        const allUsers = await users.find({}).toArray();
+        const allUsers = await users.find({ role: 'buyer' }).toArray();
+        res.send(allUsers)
+    }
+    catch (err) {
+        console.log(err.name.bgRed, err.message.bold);
+        res.send({
+            success: false,
+            error: err.message,
+        });
+    }
+})
+
+app.get('/sellers', async (req, res) => {
+    try {
+        const allUsers = await users.find({ role: 'Seller' }).toArray();
         res.send(allUsers)
     }
     catch (err) {

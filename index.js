@@ -49,7 +49,6 @@ const products = client.db('guitare').collection('products');
 const categories = client.db('guitare').collection('categories');
 const buyingProducts = client.db('guitare').collection('buyingProducts');
 const users = client.db('guitare').collection('users');
-// const addedProducts = client.db('guitare').collection('addedProducts');
 
 // products
 app.post('/products', async (req, res) => {
@@ -87,11 +86,10 @@ app.get('/products', async (req, res) => {
     }
 })
 
-app.get('/products/:id', async (req, res) => {
+app.get('/categories/:name', async (req, res) => {
     try {
-        const id = req.params.id;
-        const query = { _id: ObjectId(id) };
-        const product = await products.findOne(query);
+        const name = req.params.name;
+        const product = await products.find({ category: name }).toArray();
         res.send(product);
     }
     catch (err) {

@@ -209,7 +209,7 @@ app.post('/users', async (req, res) => {
 
 app.get('/buyers', async (req, res) => {
     try {
-        const allUsers = await users.find({ role: 'buyer' }).toArray();
+        const allUsers = await users.find({ role: 'Buyer' }).toArray();
         res.send(allUsers)
     }
     catch (err) {
@@ -219,6 +219,13 @@ app.get('/buyers', async (req, res) => {
             error: err.message,
         });
     }
+})
+
+app.delete('/buyers/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await users.deleteOne(query);
+    res.send(result);
 })
 
 app.get('/sellers', async (req, res) => {
@@ -235,6 +242,13 @@ app.get('/sellers', async (req, res) => {
     }
 })
 
+app.delete('/sellers/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await users.deleteOne(query);
+    res.send(result);
+})
+
 app.get('/users/admin/:email', async (req, res) => {
     const email = req.params.email
     const query = { email };
@@ -246,7 +260,7 @@ app.get('/users/buyer/:email', async (req, res) => {
     const email = req.params.email
     const query = { email };
     const user = await users.findOne(query);
-    res.send({ isBuyer: user?.role === 'buyer' });
+    res.send({ isBuyer: user?.role === 'Buyer' });
 })
 
 app.get('/users/seller/:email', async (req, res) => {
